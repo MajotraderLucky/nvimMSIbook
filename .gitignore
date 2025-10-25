@@ -1,0 +1,23 @@
+# Packer compiled plugins
+plugin/packer_compiled.lua
+
+# Swap files
+*.swp
+*.swo
+*~
+
+# Undo history
+.undo/
+
+# Session files
+Session.vim
+
+# Temporary files
+.netrwhist
+
+# LSP logs
+lsp.log
+
+# Plugin directories (managed by Packer)
+# Uncommment if you don't want to track plugin installations
+# plugin/
