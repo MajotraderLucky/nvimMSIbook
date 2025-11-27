@@ -53,7 +53,7 @@ require('packer').startup(function(use)
 end)
 
 require('nvim-treesitter.configs').setup {
-    ensure_installed = { "yaml", "go", "rust", "toml" },
+    ensure_installed = { "yaml", "go", "rust", "toml", "python", "bash", "c", "cpp", "lua" },
     highlight = {
         enable = true,
     },
@@ -62,7 +62,7 @@ require('nvim-treesitter.configs').setup {
 require("mason").setup()
 require("mason-lspconfig").setup {
     -- Note: rust-analyzer is managed by rustaceanvim plugin, not mason-lspconfig
-    ensure_installed = { "gopls", "yamlls" } -- Golang and YAML LSPs
+    ensure_installed = { "gopls", "yamlls", "pyright", "bashls", "clangd" }
 }
 
 -- LSP Configuration using new nvim 0.11+ API
@@ -87,8 +87,29 @@ vim.lsp.config.yamlls = {
     },
 }
 
+-- Python LSP
+vim.lsp.config.pyright = {
+    cmd = { vim.fn.stdpath('data') .. '/mason/bin/pyright-langserver', '--stdio' },
+    filetypes = { 'python' },
+    root_markers = { 'pyproject.toml', 'setup.py', 'requirements.txt', '.git' },
+}
+
+-- Bash LSP
+vim.lsp.config.bashls = {
+    cmd = { vim.fn.stdpath('data') .. '/mason/bin/bash-language-server', 'start' },
+    filetypes = { 'sh', 'bash' },
+    root_markers = { '.git' },
+}
+
+-- C/C++ LSP
+vim.lsp.config.clangd = {
+    cmd = { vim.fn.stdpath('data') .. '/mason/bin/clangd' },
+    filetypes = { 'c', 'cpp', 'objc', 'objcpp' },
+    root_markers = { 'compile_commands.json', '.clangd', '.git' },
+}
+
 -- Enable LSP servers
-vim.lsp.enable({ 'gopls', 'yamlls' })
+vim.lsp.enable({ 'gopls', 'yamlls', 'pyright', 'bashls', 'clangd' })
 
 -- Note: rust-analyzer is configured automatically by rustaceanvim plugin
 
