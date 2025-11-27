@@ -1,5 +1,12 @@
 -- Autocompletion
 return {
+  -- LuaSnip with jsregexp support
+  {
+    "L3MON4D3/LuaSnip",
+    build = "make install_jsregexp",
+  },
+
+  -- nvim-cmp
   {
     "hrsh7th/nvim-cmp",
     dependencies = {
