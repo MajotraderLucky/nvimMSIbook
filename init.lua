@@ -5,3 +5,6 @@ require('config.init')
 
 -- Initialize Lazy.nvim plugin manager
 require('config.lazy')
+
+-- Load keymaps
+require('config.keymaps')
