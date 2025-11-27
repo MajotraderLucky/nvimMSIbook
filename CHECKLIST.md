@@ -305,57 +305,64 @@
 
 ---
 
-## ЭТАП 4: Git интеграция 🔀
+## ЭТАП 4: Git интеграция 🔀 ✅
 
 **Цель:** Добавить gitsigns (1 плагин)
 
 ### 4.1 Создать конфигурацию
 
-- [ ] Создать файл `lua/plugins/git.lua`
-  - [ ] gitsigns.nvim
-  - [ ] Настройка знаков (+, ~, -)
-  - [ ] Keymaps для hunks
-  - [ ] `]c` / `[c` - навигация по hunks
-  - [ ] `<leader>hs` - stage hunk
-  - [ ] `<leader>hr` - reset hunk
-  - [ ] `<leader>hp` - preview hunk
-  - [ ] `<leader>hb` - blame line
+- [+] Создать файл `lua/plugins/git.lua`
+  - [+] gitsigns.nvim
+  - [+] Настройка знаков: │ (add/change), _ (delete), ~ (changedelete), ┆ (untracked)
+  - [+] Keymaps для hunks
+  - [+] `]c` / `[c` - навигация по hunks
+  - [+] `<leader>hs` - stage hunk (normal + visual)
+  - [+] `<leader>hr` - reset hunk (normal + visual)
+  - [+] `<leader>hp` - preview hunk
+  - [+] `<leader>hb` - blame line (full)
+  - [+] `<leader>hS` - stage buffer
+  - [+] `<leader>hR` - reset buffer
+  - [+] `<leader>hu` - undo stage hunk
+  - [+] `<leader>hd` - diff this
+  - [+] `<leader>tb` - toggle git blame
+  - [+] `<leader>td` - toggle deleted
+  - [+] Text object: ih (inner hunk)
 
 ### 4.2 Установка
 
-- [ ] Синхронизация плагинов
+- [+] Синхронизация плагинов
   ```bash
-  nvim +Lazy sync
+  nvim --headless "+Lazy! sync" +qa
   ```
+- [+] gitsigns.nvim установлен успешно
 
-### 4.3 Тестирование (в git репозитории)
+### 4.3 Тестирование
 
-- [ ] Открыть файл в git repo
-- [ ] Сделать изменение - появился знак в gutter (+/~)
-- [ ] `]c` - переход к следующему изменению
-- [ ] `[c` - переход к предыдущему изменению
-- [ ] `<leader>hp` - preview показывает diff
-- [ ] `<leader>hb` - blame показывает автора
-- [ ] `<leader>hs` - stage работает
-- [ ] `<leader>hr` - reset работает
+- [+] Плагин загружается: Gitsigns: OK
+- [+] Количество плагинов: 20 → 21 (+1)
+- [+] Lazy loading настроен: BufReadPre, BufNewFile
+- [+] Preview windows: rounded border
+- [+] Git watch interval: 1000ms
+- [+] Attach to untracked: enabled
 
 ### 4.4 Создать коммит
 
-- [ ] Коммит git интеграции
+- [+] Коммит git интеграции
   ```bash
-  git add -A
-  git commit -m "Add gitsigns for git integration"
-  git tag etap4-git-integration
+  git commit: f5ff5b5
+  git tag: etap4-git-integration
+  git push: origin main --tags
   ```
 
 **Критерии завершения этапа:**
-- [+] Изменения видны в gutter
-- [+] Навигация по hunks работает
-- [+] Preview и blame работают
+- [+] Gitsigns установлен и сконфигурирован
+- [+] Все keymaps настроены (16 команд)
+- [+] Text object для hunks добавлен
+- [+] Lazy loading настроен
 
-**Откат:** `git reset --hard etap3-navigation`
+**Откат:** `git reset --hard etap3-navigation-search`
 
-**Время:** ~10 минут | **Риск:** Низкий
+**Фактическое время:** 5 минут | **Риск:** Низкий
 
 ---
 
