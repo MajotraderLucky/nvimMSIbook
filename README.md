@@ -16,25 +16,62 @@ Modern Neovim configuration using Lazy.nvim plugin manager.
 
 ## Requirements
 
-- Neovim >= 0.11.0
-- Git
-- Build tools (gcc, make) for native extensions
-- Optional: ripgrep for telescope live_grep
-- Optional: fd for telescope file finding
+### Essential
+- **Neovim** >= 0.11.0
+- **Git** - for plugin management
+- **Build tools** (gcc, make) - for native extensions (telescope-fzf-native, LuaSnip jsregexp)
+
+### Recommended (for Telescope)
+- **ripgrep** (rg) - Fast text search for `:Telescope live_grep`
+- **fd** - Fast file finding for `:Telescope find_files`
 
 ## Installation
 
-1. Clone this repository:
+### 1. Clone this repository
 ```bash
 git clone git@github.com:MajotraderLucky/nvimMSIbook.git ~/.config/nvim
 ```
 
-2. Start Neovim:
+### 2. Install external dependencies (recommended)
+
+**Ubuntu/Debian:**
+```bash
+sudo apt-get update
+sudo apt-get install -y ripgrep fd-find
+
+# Create symlink for fd (Ubuntu installs it as fdfind)
+sudo ln -s $(which fdfind) /usr/local/bin/fd
+```
+
+**Or via snap:**
+```bash
+sudo snap install ripgrep --classic
+sudo snap install fd --classic
+```
+
+**Verify installation:**
+```bash
+rg --version  # ripgrep 14.1.0+
+fd --version  # fd 9.0.0+
+```
+
+### 3. Start Neovim
 ```bash
 nvim
 ```
 
-3. Lazy.nvim will automatically install all plugins on first launch.
+Lazy.nvim will automatically install all plugins on first launch.
+
+### 4. Verify installation
+```bash
+:checkhealth
+:checkhealth telescope
+```
+
+Expected results:
+- ✅ rg: found ripgrep
+- ✅ fd: found fd
+- ✅ fzf extension working
 
 ## Plugin List (24 total)
 
