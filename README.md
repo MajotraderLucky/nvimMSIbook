@@ -1,33 +1,26 @@
 # Neovim Configuration
 
-Personal Neovim configuration for development with Go, Rust, and YAML.
+Modern Neovim configuration using Lazy.nvim plugin manager.
 
 ## Features
 
-- **LSP Support**: gopls (Go), rust-analyzer (Rust), yamlls (YAML)
-- **Treesitter**: Advanced syntax highlighting for multiple languages
-- **Autocompletion**: nvim-cmp with LSP integration
-- **Autopairs**: Automatic bracket pairing with cmp integration
-- **File Explorer**: nvim-tree for file navigation
-- **Plugin Manager**: Packer.nvim
+- **Plugin Manager**: Lazy.nvim with lazy loading for optimal performance
+- **LSP Support**: Full LSP integration for Go, Rust, Python, YAML, Bash, C/C++
+- **Autocompletion**: nvim-cmp with LuaSnip snippets
+- **Syntax Highlighting**: Tree-sitter with 9 parsers
+- **UI Enhancements**: Lualine statusline and Bufferline tabs
+- **File Navigation**: Telescope fuzzy finder and NvimTree file explorer
+- **Git Integration**: Gitsigns for visual git decorations
+- **Diagnostics**: Trouble.nvim for beautiful error display
+- **Editing Tools**: nvim-surround and auto-save
 
-## Language Support
+## Requirements
 
-- **Go**: Full LSP support with gopls
-- **Rust**: Advanced support via rustaceanvim + rust-analyzer
-- **YAML**: LSP with Kubernetes schema support
-- **TOML**: Syntax highlighting
-
-## Plugins
-
-- `neovim/nvim-lspconfig` - LSP configuration
-- `williamboman/mason.nvim` - LSP installer
-- `hrsh7th/nvim-cmp` - Autocompletion
-- `nvim-treesitter/nvim-treesitter` - Syntax highlighting
-- `windwp/nvim-autopairs` - Auto bracket pairing
-- `mrcjkb/rustaceanvim` - Rust support
-- `nvim-tree/nvim-tree.lua` - File explorer
-- `fatih/vim-go` - Go tooling
+- Neovim >= 0.11.0
+- Git
+- Build tools (gcc, make) for native extensions
+- Optional: ripgrep for telescope live_grep
+- Optional: fd for telescope file finding
 
 ## Installation
 
@@ -36,62 +29,185 @@ Personal Neovim configuration for development with Go, Rust, and YAML.
 git clone git@github.com:MajotraderLucky/nvimMSIbook.git ~/.config/nvim
 ```
 
-2. Install Packer (if not already installed):
+2. Start Neovim:
 ```bash
-git clone --depth 1 https://github.com/wbthomason/packer.nvim \
-  ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+nvim
 ```
 
-3. Open nvim and install plugins:
-```bash
-nvim +PackerSync +qa
-```
+3. Lazy.nvim will automatically install all plugins on first launch.
 
-4. Restart nvim and enjoy!
+## Plugin List (24 total)
 
-## Key Features
+### Core
+- **lazy.nvim** - Plugin manager
 
-### Bracket Highlighting
-- `showmatch` enabled for visual bracket matching
-- Auto-closing brackets with nvim-autopairs
+### LSP & Completion
+- **nvim-lspconfig** - LSP configuration
+- **mason.nvim** - LSP server installer
+- **mason-lspconfig.nvim** - Mason integration with lspconfig
+- **nvim-cmp** - Autocompletion engine
+- **cmp-nvim-lsp** - LSP source for nvim-cmp
+- **cmp_luasnip** - Snippet source for nvim-cmp
+- **LuaSnip** - Snippet engine with jsregexp support
 
-### LSP Integration
-- Uses modern nvim 0.11+ `vim.lsp.config` API
-- Automatic LSP server installation via Mason
-- Real-time diagnostics and code completion
+### Syntax & Parsing
+- **nvim-treesitter** - Better syntax highlighting
 
-### File Navigation
-- nvim-tree keybindings:
-  - `gy` - copy absolute path
-  - `Y` - copy relative path
-  - `y` - copy filename
+### Language-Specific
+- **vim-go** - Go development tools
+- **rustaceanvim** - Rust development support
 
-## Requirements
+### UI & Visual
+- **lualine.nvim** - Statusline
+- **bufferline.nvim** - Buffer tabs
+- **nvim-web-devicons** - File icons
+- **nvim-tree.lua** - File explorer
 
-- Neovim >= 0.11
-- Git
-- Node.js (for some LSP servers)
-- Rust toolchain (for rust-analyzer)
-- Go toolchain (for gopls)
+### Navigation & Search
+- **telescope.nvim** - Fuzzy finder
+- **telescope-fzf-native.nvim** - FZF native sorter
+- **plenary.nvim** - Telescope dependency
+- **which-key.nvim** - Keybinding hints
 
-## Structure
+### Git
+- **gitsigns.nvim** - Git decorations and hunks
+
+### Editing
+- **nvim-autopairs** - Auto-close brackets
+- **nvim-surround** - Surround text objects
+- **auto-save.nvim** - Automatic file saving
+
+### Diagnostics
+- **trouble.nvim** - Beautiful diagnostics list
+
+## Key Mappings
+
+Leader key: `Space`
+
+### Buffer Navigation
+- `Tab` - Next buffer
+- `Shift+Tab` - Previous buffer
+- `Space+x` - Close buffer
+- `Space+1-5` - Jump to buffer 1-5
+
+### Window Navigation
+- `Ctrl+h/j/k/l` - Move between windows
+
+### File Operations
+- `Space+e` - Toggle file explorer
+- `Ctrl+s` - Save file
+
+### Telescope (Fuzzy Finder)
+- `Space+ff` - Find files
+- `Space+fg` - Live grep
+- `Space+fb` - Find buffers
+- `Space+fh` - Help tags
+- `Space+fs` - LSP symbols
+- `Space+fr` - Recent files
+
+### Git (Gitsigns)
+- `]c` / `[c` - Next/previous hunk
+- `Space+hs` - Stage hunk
+- `Space+hr` - Reset hunk
+- `Space+hp` - Preview hunk
+- `Space+hb` - Blame line
+- `Space+tb` - Toggle blame line
+
+### Diagnostics (Trouble)
+- `Space+xx` - Workspace diagnostics
+- `Space+xX` - Buffer diagnostics
+- `Space+cs` - Symbols
+- `Space+cl` - LSP definitions/references
+
+### Editing (nvim-surround)
+- `ysiw"` - Surround word with quotes
+- `cs"'` - Change surrounding " to '
+- `ds"` - Delete surrounding quotes
+- `yss)` - Surround line with ()
+
+### Other
+- `Esc` - Clear search highlighting
+- `Alt+j/k` - Move lines up/down
+
+## File Structure
 
 ```
 ~/.config/nvim/
-├── init.lua                 # Main configuration
+├── init.lua                    # Main entry point
 ├── lua/
 │   ├── config/
-│   │   └── init.lua        # Basic vim settings
+│   │   ├── init.lua           # Basic settings
+│   │   ├── lazy.lua           # Lazy.nvim bootstrap
+│   │   └── keymaps.lua        # Key mappings
 │   └── plugins/
-│       ├── init.lua        # Plugin definitions
-│       ├── lsp.lua         # LSP configuration
-│       ├── treesitter.lua  # Treesitter config
-│       ├── nvim-tree.lua   # File explorer config
-│       └── cmp.lua         # Completion config
-└── plugin/
-    └── packer_compiled.lua # Auto-generated
+│       ├── lsp.lua            # LSP configuration
+│       ├── completion.lua     # Autocompletion
+│       ├── treesitter.lua     # Syntax highlighting
+│       ├── editor.lua         # Editor plugins
+│       ├── language.lua       # Language-specific
+│       ├── ui.lua             # UI plugins
+│       ├── navigation.lua     # Navigation & search
+│       ├── git.lua            # Git integration
+│       └── diagnostics.lua    # Diagnostics
+├── CHECKLIST.md               # Migration checklist
+├── MIGRATION_PLAN.md          # Migration plan
+└── README.md                  # This file
 ```
+
+## Performance
+
+- Startup time: ~70ms
+- All plugins lazy loaded where appropriate
+- Total plugin count: 24
+
+## Health Check
+
+Run `:checkhealth` in Neovim to verify installation.
+
+Key checks:
+- ✅ Lazy.nvim working
+- ✅ No Packer remnants
+- ✅ LuaSnip jsregexp installed
+- ✅ Mason working
+- ✅ 6 LSP servers configured
+
+## LSP Servers
+
+Configured via Mason:
+- **gopls** - Go
+- **yamlls** - YAML
+- **pyright** - Python
+- **bashls** - Bash
+- **clangd** - C/C++
+- **rust-analyzer** - Rust (via rustaceanvim)
+
+## Troubleshooting
+
+### Plugins not loading
+```bash
+:Lazy sync
+```
+
+### LSP not working
+```bash
+:Mason
+# Install required servers
+```
+
+### Slow startup
+```bash
+nvim --startuptime startup.log +q
+tail -1 startup.log  # Should be < 100ms
+```
+
+## Migration History
+
+Migrated from Packer.nvim to Lazy.nvim:
+- Before: 11 plugins, Packer.nvim
+- After: 24 plugins, Lazy.nvim
+- Migration completed in 7 stages
+- All commits tagged for rollback capability
 
 ## License
 
-MIT
+Personal configuration - use as you wish.
