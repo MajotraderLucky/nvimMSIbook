@@ -4,6 +4,42 @@ local M = {}
 -- Default project directory
 M.default_dir = "/home/ryazanov/Development/k8s_moex_ml_bot/finam_integration/finam-rs"
 
+-- Commands for each terminal: { cmd = "...", delay = ms }
+-- delay is from workspace open (default 500ms for immediate)
+M.commands = {
+  [1] = {
+    delay = 500,
+    cmd = [[cargo run --release --bin orchestrator -- \
+  --no-ui \
+  --collect-ml-data \
+  --collect-candles \
+  --enable-ml-retraining \
+  --symbol SBERF@RTSX \
+  --ml-symbols \
+    SBERF@RTSX,GAZPF@RTSX,LKOHF@RTSX,RTKM@RTSX,YDEX@RTSX \
+  --candle-symbols \
+    SBERF@RTSX,GAZPF@RTSX,LKOHF@RTSX,RTKM@RTSX,YDEX@RTSX \
+  --database-url \
+    "postgresql://mlbot_user:mlbot_secure_2024@localhost:5432/moex_trading" \
+  --ml-target-samples 20000 \
+  --ml-interval 60 \
+  --candle-interval 300]],
+  },
+  [2] = {
+    delay = 180500,  -- 1 minute after terminal 3 (120500 + 60000)
+    cmd = [[cargo run --release --bin bot4rest SBERF@RTSX 0.12]],
+  },
+  [3] = {
+    delay = 120500,  -- 2 minutes after first command (120000 + 500)
+    cmd = [[cargo run --release --bin spread_visualizer -- \
+  --symbols SBERF@RTSX \
+  --load-historical \
+  --database-url \
+    "postgresql://mlbot_user:mlbot_secure_2024@localhost:5432/moex_trading" \
+  --no-size-check]],
+  },
+}
+
 M.setup = function(dir)
   dir = dir or M.default_dir
   local terminals = {}
@@ -24,11 +60,25 @@ M.setup = function(dir)
   terminals[3] = vim.b.terminal_job_id
   vim.fn.chansend(terminals[3], "cd " .. dir .. "\n")
 
-  -- Return to first terminal
-  vim.cmd("wincmd t")
-
   -- Store terminals for later use
   M.terminals = terminals
+
+  -- Execute commands with their delays
+  for i, config in pairs(M.commands) do
+    if config and config.cmd and terminals[i] then
+      local term_id = terminals[i]
+      local cmd = config.cmd
+      vim.defer_fn(function()
+        vim.fn.chansend(term_id, cmd .. "\n")
+        if config.delay > 1000 then
+          vim.notify("Command started in terminal " .. i, vim.log.levels.INFO)
+        end
+      end, config.delay)
+    end
+  end
+
+  -- Return to first terminal
+  vim.cmd("wincmd t")
 
   vim.notify("Workspace opened: " .. dir, vim.log.levels.INFO)
 end
