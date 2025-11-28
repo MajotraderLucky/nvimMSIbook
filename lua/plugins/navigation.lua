@@ -73,6 +73,7 @@ return {
       -- Register leader key groups
       wk.add({
         { "<leader>f", group = "Find (Telescope)" },
+        { "<leader>w", group = "Workspace" },
         { "<leader>e", desc = "Toggle file explorer" },
         { "<leader>x", desc = "Close buffer" },
         { "<leader>X", desc = "Force close buffer" },
