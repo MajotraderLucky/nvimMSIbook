@@ -19,6 +19,24 @@ return {
           indent_markers = {
             enable = true,
           },
+          icons = {
+            git_placement = "after",
+            glyphs = {
+              git = {
+                unstaged = "✗",
+                staged = "✓",
+                unmerged = "",
+                renamed = "➜",
+                untracked = "★",
+                deleted = "",
+                ignored = "◌",
+              },
+            },
+          },
+        },
+        git = {
+          enable = true,
+          ignore = false,  -- Show gitignored files
         },
       })
     end,
