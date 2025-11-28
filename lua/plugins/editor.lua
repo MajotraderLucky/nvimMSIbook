@@ -78,9 +78,6 @@ return {
     config = function()
       require("auto-save").setup({
         enabled = true,
-        execution_message = {
-          enabled = false,  -- Don't show "AutoSave: saved at ..." message
-        },
         trigger_events = {
           immediate_save = { "BufLeave", "FocusLost" },
           defer_save = { "InsertLeave", "TextChanged" },

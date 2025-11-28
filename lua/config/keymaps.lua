@@ -44,13 +44,22 @@ vim.keymap.set("v", "<A-k>", ":m '<-2<CR>gv=gv", { desc = "Move selection up", s
 -- Clear search highlighting
 vim.keymap.set("n", "<Esc>", ":nohlsearch<CR>", { desc = "Clear search highlighting", silent = true })
 
+-- Copy file path to clipboard
+vim.keymap.set("n", "<leader>yp", ':let @+ = expand("%:p")<CR>:echo "Path copied: " .. expand("%:p")<CR>', { desc = "Copy file path", silent = true })
+
 -- Telescope - fuzzy finder
 vim.keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "Find files", silent = true })
 vim.keymap.set("n", "<leader>fg", "<cmd>Telescope live_grep<cr>", { desc = "Live grep", silent = true })
 vim.keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<cr>", { desc = "Find buffers", silent = true })
 vim.keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<cr>", { desc = "Help tags", silent = true })
-vim.keymap.set("n", "<leader>fs", "<cmd>Telescope lsp_document_symbols<cr>", { desc = "LSP symbols", silent = true })
+vim.keymap.set("n", "<leader>fs", "<cmd>Trouble symbols toggle focus=true win.position=right win.size=70<cr>", { desc = "LSP symbols", silent = true })
 vim.keymap.set("n", "<leader>fr", "<cmd>Telescope oldfiles<cr>", { desc = "Recent files", silent = true })
+
+-- Diagnostics navigation
+vim.keymap.set("n", "gl", vim.diagnostic.open_float, { desc = "Show diagnostic float", silent = true })
+vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Previous diagnostic", silent = true })
+vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Next diagnostic", silent = true })
+vim.keymap.set("n", "<leader>xf", function() vim.diagnostic.goto_next({ cursor_position = {1, 0} }) end, { desc = "First diagnostic", silent = true })
 
 -- Trouble - diagnostics
 vim.keymap.set("n", "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", { desc = "Diagnostics (Trouble)", silent = true })
