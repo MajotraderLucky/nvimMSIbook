@@ -25,6 +25,12 @@ Modern Neovim configuration using Lazy.nvim plugin manager.
 - **ripgrep** (rg) - Fast text search for `:Telescope live_grep`
 - **fd** - Fast file finding for `:Telescope find_files`
 
+### Python Provider (optional)
+- **pynvim** - Required for Python-based plugins
+```bash
+pipx install pynvim
+```
+
 ## Installation
 
 ### 1. Clone this repository
@@ -108,6 +114,7 @@ Expected results:
 
 ### Git
 - **gitsigns.nvim** - Git decorations and hunks
+- **nvim-tree git integration** - Git status icons in file explorer
 
 ### Editing
 - **nvim-autopairs** - Auto-close brackets
@@ -146,15 +153,32 @@ Leader key: `Space`
 - `]c` / `[c` - Next/previous hunk
 - `Space+hs` - Stage hunk
 - `Space+hr` - Reset hunk
+- `Space+hS` - Stage buffer
+- `Space+hR` - Reset buffer
+- `Space+hu` - Undo stage hunk
 - `Space+hp` - Preview hunk
-- `Space+hb` - Blame line
+- `Space+hb` - Blame line (full)
+- `Space+hd` - Diff this
+- `Space+hD` - Diff this ~
 - `Space+tb` - Toggle blame line
+- `Space+td` - Toggle deleted
 
 ### Diagnostics (Trouble)
 - `Space+xx` - Workspace diagnostics
 - `Space+xX` - Buffer diagnostics
+- `Space+xL` - Location list
+- `Space+xQ` - Quickfix list
 - `Space+cs` - Symbols
 - `Space+cl` - LSP definitions/references
+
+### File Explorer (NvimTree)
+- `Space+e` - Toggle file explorer
+- Git status icons:
+  - `✗` - Unstaged changes
+  - `✓` - Staged changes
+  - `★` - Untracked file
+  - `` - Deleted
+  - `◌` - Ignored
 
 ### Editing (nvim-surround)
 - `ysiw"` - Surround word with quotes
@@ -165,6 +189,8 @@ Leader key: `Space`
 ### Other
 - `Esc` - Clear search highlighting
 - `Alt+j/k` - Move lines up/down
+- `Space+q` - Quit
+- `Space+Q` - Quit all without saving
 
 ## File Structure
 
@@ -202,11 +228,19 @@ Leader key: `Space`
 Run `:checkhealth` in Neovim to verify installation.
 
 Key checks:
-- ✅ Lazy.nvim working
-- ✅ No Packer remnants
-- ✅ LuaSnip jsregexp installed
-- ✅ Mason working
-- ✅ 6 LSP servers configured
+- Lazy.nvim working
+- No Packer remnants
+- LuaSnip jsregexp installed
+- Mason working
+- 6 LSP servers configured
+- Python provider (pynvim 0.6.0)
+
+## Treesitter Parsers
+
+Installed syntax highlighting for:
+- Rust, Go, Python, C/C++
+- Lua, Bash, YAML, TOML
+- Markdown, Vim, Vimdoc
 
 ## LSP Servers
 

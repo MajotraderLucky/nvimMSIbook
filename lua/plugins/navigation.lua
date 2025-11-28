@@ -64,25 +64,9 @@ return {
     config = function()
       local wk = require("which-key")
       wk.setup({
-        plugins = {
-          marks = true,
-          registers = true,
-          spelling = {
-            enabled = false,
-          },
-          presets = {
-            operators = false,
-            motions = false,
-            text_objects = false,
-            windows = true,
-            nav = true,
-            z = true,
-            g = true,
-          },
-        },
-        window = {
+        preset = "modern",
+        win = {
           border = "rounded",
-          position = "bottom",
         },
       })
 

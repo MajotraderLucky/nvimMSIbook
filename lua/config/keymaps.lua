@@ -1,8 +1,5 @@
 -- Keymaps for better workflow
-
--- Set leader key
-vim.g.mapleader = " "  -- Space as leader key
-vim.g.maplocalleader = " "
+-- Note: mapleader and maplocalleader are set in init.lua (before lazy.nvim)
 
 -- Buffer navigation (working with tabs in bufferline)
 vim.keymap.set("n", "<Tab>", ":bnext<CR>", { desc = "Next buffer", silent = true })
