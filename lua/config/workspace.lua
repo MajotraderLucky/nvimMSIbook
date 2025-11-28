@@ -92,4 +92,33 @@ M.send = function(term_num, cmd)
   end
 end
 
+-- VPN check and auto-start
+M.vpn_dir = "/home/ryazanov/.myBashScripts"
+
+M.vpn_check = function()
+  -- Open terminal in bottom split
+  vim.cmd("botright split | terminal")
+  local term_id = vim.b.terminal_job_id
+
+  -- Send commands: cd, check status, start if needed, show status
+  local vpn_script = [[
+cd ]] .. M.vpn_dir .. [[
+
+if ./vpn_control.sh status 2>&1 | grep -q "VPN интерфейс неактивен"; then
+  echo "VPN выключен, запускаем..."
+  ./vpn_control.sh start
+  sleep 2
+  ./vpn_control.sh status
+else
+  echo "VPN уже активен"
+fi
+]]
+
+  vim.defer_fn(function()
+    vim.fn.chansend(term_id, vpn_script)
+  end, 300)
+
+  vim.notify("VPN check started", vim.log.levels.INFO)
+end
+
 return M

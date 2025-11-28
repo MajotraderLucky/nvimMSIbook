@@ -73,3 +73,8 @@ vim.keymap.set("n", "<leader>xQ", "<cmd>Trouble qflist toggle<cr>", { desc = "Qu
 vim.keymap.set("n", "<leader>ws", function()
   require("config.workspace").setup()
 end, { desc = "Open workspace (3 terminals)", silent = true })
+
+-- VPN check and auto-start
+vim.keymap.set("n", "<leader>wv", function()
+  require("config.workspace").vpn_check()
+end, { desc = "VPN check/start", silent = true })
