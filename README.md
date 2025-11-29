@@ -186,9 +186,31 @@ Leader key: `Space`
 - `ds"` - Delete surrounding quotes
 - `yss)` - Surround line with ()
 
+### Workspace (Trading Bots)
+- `Space+ws` - Open workspace (3 terminals with timed commands)
+- `Space+wv` - VPN check/start
+- `Space+wd` - ML Validation Dashboard (full screen)
+
+**Workspace layout (`Space+ws`):**
+```
++---------------------------+---------------------------+
+|  Terminal 1 (orchestrator)|   Terminal 2 (bot4rest)   |
+|  starts: immediately      |   starts: +3 min          |
++---------------------------+---------------------------+
+|          Terminal 3 (spread_visualizer)               |
+|          starts: +2 min                               |
++-------------------------------------------------------+
+```
+
+### Diagnostics Navigation
+- `gl` - Show diagnostic float
+- `[d` / `]d` - Previous/next diagnostic
+- `Space+xf` - Jump to first diagnostic
+
 ### Other
 - `Esc` - Clear search highlighting
 - `Alt+j/k` - Move lines up/down
+- `Space+yp` - Copy file path to clipboard
 - `Space+q` - Quit
 - `Space+Q` - Quit all without saving
 
@@ -201,7 +223,8 @@ Leader key: `Space`
 │   ├── config/
 │   │   ├── init.lua           # Basic settings
 │   │   ├── lazy.lua           # Lazy.nvim bootstrap
-│   │   └── keymaps.lua        # Key mappings
+│   │   ├── keymaps.lua        # Key mappings
+│   │   └── workspace.lua      # Trading workspace automation
 │   └── plugins/
 │       ├── lsp.lua            # LSP configuration
 │       ├── completion.lua     # Autocompletion
@@ -269,6 +292,49 @@ Configured via Mason:
 ```bash
 nvim --startuptime startup.log +q
 tail -1 startup.log  # Should be < 100ms
+```
+
+## Workspace Automation
+
+The `workspace.lua` module provides automated terminal management for trading bot development.
+
+### Features
+
+- **Multi-terminal layout**: Opens 3 terminals with configurable commands
+- **Timed execution**: Commands run with specified delays (0.5s, 2min, 3min)
+- **VPN management**: Auto-check and start VPN if inactive
+- **ML Dashboard**: Full-screen validation dashboard for ML predictions
+
+### Configuration
+
+Edit `lua/config/workspace.lua` to customize:
+
+```lua
+-- Default project directory
+M.default_dir = "/path/to/your/project"
+
+-- Commands with delays (milliseconds)
+M.commands = {
+  [1] = { delay = 500,    cmd = "your command" },
+  [2] = { delay = 180500, cmd = "delayed command" },
+  [3] = { delay = 120500, cmd = "another command" },
+}
+```
+
+### API
+
+```lua
+-- Open workspace with custom directory
+require("config.workspace").setup("/custom/path")
+
+-- Send command to specific terminal (1, 2, or 3)
+require("config.workspace").send(1, "cargo build")
+
+-- Check/start VPN
+require("config.workspace").vpn_check()
+
+-- Open validation dashboard
+require("config.workspace").validation_dashboard()
 ```
 
 ## Migration History
