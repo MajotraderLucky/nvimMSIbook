@@ -78,3 +78,8 @@ end, { desc = "Open workspace (3 terminals)", silent = true })
 vim.keymap.set("n", "<leader>wv", function()
   require("config.workspace").vpn_check()
 end, { desc = "VPN check/start", silent = true })
+
+-- Validation Dashboard
+vim.keymap.set("n", "<leader>wd", function()
+  require("config.workspace").validation_dashboard()
+end, { desc = "ML Validation Dashboard", silent = true })

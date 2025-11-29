@@ -92,6 +92,25 @@ M.send = function(term_num, cmd)
   end
 end
 
+-- Validation Dashboard (ML прогнозов)
+M.validation_dashboard = function()
+  vim.cmd("enew | terminal")  -- Full screen terminal
+  local term_id = vim.b.terminal_job_id
+
+  local cmd = [[cd ]] .. M.default_dir .. [[ && cargo run --release --bin validation_dashboard -- \
+  --symbol SBERF@RTSX \
+  --database-url \
+    "postgresql://mlbot_user:mlbot_secure_2024@localhost:5432/moex_trading" \
+  --refresh-interval 30 \
+  --time-window-hours 24]]
+
+  vim.defer_fn(function()
+    vim.fn.chansend(term_id, cmd .. "\n")
+  end, 300)
+
+  vim.notify("Validation Dashboard starting...", vim.log.levels.INFO)
+end
+
 -- VPN check and auto-start
 M.vpn_dir = "/home/ryazanov/.myBashScripts"
 
