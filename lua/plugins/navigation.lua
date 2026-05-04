@@ -72,11 +72,16 @@ return {
 
       -- Register leader key groups
       wk.add({
+        { "<leader>b", group = "Buffer" },
+        { "<leader>bn", desc = "Next buffer" },
+        { "<leader>bp", desc = "Previous buffer" },
+        { "<leader>bd", desc = "Close buffer" },
+        { "<leader>bD", desc = "Force close buffer" },
+        { "<leader>bb", desc = "Find buffer" },
         { "<leader>f", group = "Find (Telescope)" },
         { "<leader>w", group = "Workspace" },
+        { "<leader>x", group = "Diagnostics (Trouble)" },
         { "<leader>e", desc = "Toggle file explorer" },
-        { "<leader>x", desc = "Close buffer" },
-        { "<leader>X", desc = "Force close buffer" },
         { "<leader>q", desc = "Quit" },
         { "<leader>Q", desc = "Quit all without saving" },
         { "<leader>1", desc = "Go to buffer 1" },

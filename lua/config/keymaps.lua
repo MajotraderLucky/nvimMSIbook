@@ -4,8 +4,13 @@
 -- Buffer navigation (working with tabs in bufferline)
 vim.keymap.set("n", "<Tab>", ":bnext<CR>", { desc = "Next buffer", silent = true })
 vim.keymap.set("n", "<S-Tab>", ":bprevious<CR>", { desc = "Previous buffer", silent = true })
-vim.keymap.set("n", "<leader>x", ":bdelete<CR>", { desc = "Close buffer", silent = true })
-vim.keymap.set("n", "<leader>X", ":bdelete!<CR>", { desc = "Force close buffer", silent = true })
+
+-- Buffer group under <leader>b
+vim.keymap.set("n", "<leader>bn", ":bnext<CR>", { desc = "Next buffer", silent = true })
+vim.keymap.set("n", "<leader>bp", ":bprevious<CR>", { desc = "Previous buffer", silent = true })
+vim.keymap.set("n", "<leader>bd", ":bdelete<CR>", { desc = "Close buffer", silent = true })
+vim.keymap.set("n", "<leader>bD", ":bdelete!<CR>", { desc = "Force close buffer", silent = true })
+vim.keymap.set("n", "<leader>bb", "<cmd>Telescope buffers<cr>", { desc = "Find buffer", silent = true })
 
 -- Quick buffer switching by number
 vim.keymap.set("n", "<leader>1", "<Cmd>BufferLineGoToBuffer 1<CR>", { desc = "Go to buffer 1", silent = true })
