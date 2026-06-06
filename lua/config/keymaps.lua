@@ -74,6 +74,34 @@ vim.keymap.set("n", "<leader>cl", "<cmd>Trouble lsp toggle focus=false win.posit
 vim.keymap.set("n", "<leader>xL", "<cmd>Trouble loclist toggle<cr>", { desc = "Location List (Trouble)", silent = true })
 vim.keymap.set("n", "<leader>xQ", "<cmd>Trouble qflist toggle<cr>", { desc = "Quickfix List (Trouble)", silent = true })
 
+
+-- Goose - local AI terminal inside nvim
+local function open_goose_terminal()
+  local name = "goose-terminal"
+  for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+    if vim.api.nvim_buf_is_loaded(bufnr) and vim.api.nvim_buf_get_name(bufnr):match(name .. "$") then
+      local job_id = vim.b[bufnr].terminal_job_id
+      if job_id and vim.fn.jobwait({ job_id }, 0)[1] == -1 then
+        vim.api.nvim_set_current_buf(bufnr)
+        vim.cmd("startinsert")
+        return
+      end
+      vim.api.nvim_buf_delete(bufnr, { force = true })
+      break
+    end
+  end
+
+  vim.cmd("enew")
+  vim.cmd("terminal goose-local-session")
+  vim.cmd("file " .. name)
+  vim.opt_local.buflisted = true
+  vim.opt_local.scrollback = 100000
+  vim.cmd("startinsert")
+end
+
+vim.keymap.set("n", "<leader>wg", open_goose_terminal, { desc = "Goose terminal", silent = true })
+vim.keymap.set("t", "<Esc><Esc>", [[<C-\><C-n>]], { desc = "Terminal normal mode", silent = true })
+
 -- Workspace - terminal splits
 vim.keymap.set("n", "<leader>ws", function()
   require("config.workspace").setup()

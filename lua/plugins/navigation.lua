@@ -80,6 +80,7 @@ return {
         { "<leader>bb", desc = "Find buffer" },
         { "<leader>f", group = "Find (Telescope)" },
         { "<leader>w", group = "Workspace" },
+        { "<leader>wg", desc = "Goose terminal" },
         { "<leader>x", group = "Diagnostics (Trouble)" },
         { "<leader>e", desc = "Toggle file explorer" },
         { "<leader>q", desc = "Quit" },
