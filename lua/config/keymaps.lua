@@ -75,9 +75,8 @@ vim.keymap.set("n", "<leader>xL", "<cmd>Trouble loclist toggle<cr>", { desc = "L
 vim.keymap.set("n", "<leader>xQ", "<cmd>Trouble qflist toggle<cr>", { desc = "Quickfix List (Trouble)", silent = true })
 
 
--- Goose - local AI terminal inside nvim
-local function open_goose_terminal()
-  local name = "goose-terminal"
+-- Goose - AI terminal inside nvim (local cockpit + T-050 paid parking-mode)
+local function open_goose_terminal(name, cmd)
   for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
     if vim.api.nvim_buf_is_loaded(bufnr) and vim.api.nvim_buf_get_name(bufnr):match(name .. "$") then
       local job_id = vim.b[bufnr].terminal_job_id
@@ -92,14 +91,32 @@ local function open_goose_terminal()
   end
 
   vim.cmd("enew")
-  vim.cmd("terminal goose-local-session")
+  vim.cmd("terminal " .. cmd)
   vim.cmd("file " .. name)
   vim.opt_local.buflisted = true
   vim.opt_local.scrollback = 100000
   vim.cmd("startinsert")
 end
 
-vim.keymap.set("n", "<leader>wg", open_goose_terminal, { desc = "Goose terminal", silent = true })
+-- <leader>wgl = local cockpit (resident 3B); <leader>wgp = T-050 paid parking-mode (aitunnel, real spend)
+vim.keymap.set("n", "<leader>wgl", function()
+  open_goose_terminal("goose-terminal", "goose-local-session")
+end, { desc = "Goose local cockpit", silent = true })
+-- <leader>wgn = T-053 net-lane cockpit (exit-pool only: small packet, faithful node list incl timeweb)
+vim.keymap.set("n", "<leader>wgn", function()
+  open_goose_terminal("goose-terminal-net", "goose-net-session")
+end, { desc = "Goose net-lane cockpit (T-053)", silent = true })
+-- <leader>wga = T-053 lan-lane cockpit (LAN/archbook/Cisco only: small packet, no exit-pool/Kanban/disk)
+vim.keymap.set("n", "<leader>wga", function()
+  open_goose_terminal("goose-terminal-lan", "goose-lan-session")
+end, { desc = "Goose lan-lane cockpit (archbook/LAN, T-053)", silent = true })
+-- <leader>wgs = T-053 planning-lane cockpit (task-status only: Обзор IN PROGRESS, no net/disk/LAN)
+vim.keymap.set("n", "<leader>wgs", function()
+  open_goose_terminal("goose-terminal-planning", "goose-planning-session")
+end, { desc = "Goose planning-lane cockpit (status, T-053)", silent = true })
+vim.keymap.set("n", "<leader>wgp", function()
+  open_goose_terminal("goose-paid-terminal", "goose-paid-session " .. vim.fn.expand("~/Development/cppskillbox"))
+end, { desc = "Goose PAID (parking, real spend)", silent = true })
 vim.keymap.set("t", "<Esc><Esc>", [[<C-\><C-n>]], { desc = "Terminal normal mode", silent = true })
 
 -- Workspace - terminal splits
